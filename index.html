@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zepto Ops 360° — Operations Director Command Center (Demo)</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-size='80'>⚡</text></svg>">
+</head>
+<body>
+<div id="boot">
+  <div class="boot-inner">
+    <img class="boot-logo-img" src="assets/zepto-logo.svg" alt="zepto">
+    <div class="boot-sub">OPS <b>360°</b> · Director Command Center</div>
+    <div class="boot-bar"><div class="boot-fill"></div></div>
+    <div class="boot-msg">Generating synthetic operations dataset…</div>
+  </div>
+</div>
+
+<div class="app" id="app" style="visibility:hidden">
+
+  <!-- ======================= SIDEBAR ======================= -->
+  <button class="sb-handle" id="sbHandle" title="Open / close sidebar">‹</button>
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-brand">
+      <div class="sb-logo-img"><img src="assets/zepto-logo.svg" alt="zepto"></div>
+      <div class="sb-name">OPS <b>360°</b><span>Director Command Center</span></div>
+    </div>
+    <div class="sb-demo">SYNTHETIC DEMO DATA</div>
+    <nav class="sb-nav" id="sbNav"></nav>
+    <div class="sb-foot">
+      <div class="sb-user"><div class="sb-avatar">OD</div>
+        <div><div class="sb-uname">Ops Director</div><div class="sb-urole">Network Control · IN</div></div>
+      </div>
+      <div class="sb-note">Portfolio demo · Not real Zepto internal data</div>
+    </div>
+  </aside>
+
+  <!-- ======================= MAIN ======================= -->
+  <div class="main">
+    <header class="topbar">
+      <div class="tb-left">
+        <button class="icon-btn" id="btnCollapse" title="Toggle sidebar">☰</button>
+        <div>
+          <h1 id="pageTitle">Executive Overview</h1>
+          <div class="tb-sub" id="pageSub">Network-wide operational health</div>
+        </div>
+      </div>
+      <div class="tb-right">
+        <div class="tb-clock" id="liveClock" title="Simulated 'now' against the dataset's latest day">
+          <span class="dot-live"></span><span id="clockTxt">—</span>
+        </div>
+        <button class="btn-ghost" id="btnTheme" title="Toggle light/dark">🌙</button>
+      </div>
+    </header>
+
+    <!-- ======================= FILTER BAR ======================= -->
+    <div class="filterbar" id="filterbar">
+      <div class="fb-row">
+        <div class="fb-item">
+          <label>Date Range</label>
+          <select id="fPreset">
+            <option value="today">Today</option>
+            <option value="yesterday">Yesterday</option>
+            <option value="l7" selected>Last 7 Days</option>
+            <option value="l30">Last 30 Days</option>
+            <option value="mtd">Month to Date</option>
+            <option value="prev">Previous Month</option>
+            <option value="l90">Last 3 Months</option>
+            <option value="custom">Custom Range</option>
+          </select>
+        </div>
+        <div class="fb-item fb-custom" id="customWrap" style="display:none">
+          <label>From → To</label>
+          <span class="fb-dates"><input type="date" id="fFrom"><input type="date" id="fTo"></span>
+        </div>
+        <div class="fb-item"><label>City</label><select id="fCity"></select></div>
+        <div class="fb-item"><label>Zone</label><select id="fZone"></select></div>
+        <div class="fb-item"><label>Dark Store</label><select id="fStore"></select></div>
+        <div class="fb-item"><label>Status</label><select id="fStatus"></select></div>
+        <div class="fb-item"><label>Category</label><select id="fCat"></select></div>
+        <div class="fb-item"><label>Customer</label><select id="fCust">
+          <option value="all">All</option><option value="new">New</option><option value="repeat">Repeat</option>
+        </select></div>
+        <div class="fb-item"><label>Payment</label><select id="fPay"></select></div>
+        <div class="fb-item"><label>Delivery SLA</label><select id="fSla">
+          <option value="all">All</option><option value="le10">≤ 10 min</option><option value="le15">≤ 15 min</option>
+          <option value="met">Within 20 (Met)</option><option value="breach">Breached (>20)</option>
+        </select></div>
+        <div class="fb-item"><label>Hour</label><select id="fHour"></select></div>
+        <div class="fb-item"><label>Day of Week</label><select id="fDow"></select></div>
+        <button class="btn-reset" id="btnReset" title="Reset all filters">⟲ Reset</button>
+      </div>
+      <div class="fb-meta" id="fbMeta"></div>
+    </div>
+
+    <!-- ======================= PAGES ======================= -->
+    <main id="pages">
+      <section class="page" id="page-exec"></section>
+      <section class="page" id="page-live"></section>
+      <section class="page" id="page-tower"></section>
+      <section class="page" id="page-stores"></section>
+      <section class="page" id="page-sla"></section>
+      <section class="page" id="page-delays"></section>
+      <section class="page" id="page-riders"></section>
+      <section class="page" id="page-inventory"></section>
+      <section class="page" id="page-customers"></section>
+      <section class="page" id="page-cancels"></section>
+      <section class="page" id="page-workforce"></section>
+      <section class="page" id="page-peak"></section>
+      <section class="page" id="page-finance"></section>
+      <section class="page" id="page-alerts"></section>
+      <section class="page" id="page-insights"></section>
+      <section class="page" id="page-actions"></section>
+      <section class="page" id="page-download"></section>
+    </main>
+
+    <footer class="foot">
+      Zepto Ops 360° · Demonstration dashboard built on 100% synthetic, locally generated data.
+      Not affiliated with Zepto. No real customer, store, rider or transaction data is used.
+    </footer>
+  </div>
+
+  <!-- drill-down drawer + order modal -->
+  <div class="drawer-veil" id="drawerVeil"></div>
+  <aside class="drawer" id="drawer"></aside>
+  <div class="modal-veil" id="modalVeil"><div class="modal" id="modal"></div></div>
+</div>
+
+<script src="chart.umd.min.js"></script>
+<script src="data.js"></script>
+<script src="charts.js"></script>
+<script src="script.js"></script>
+<script src="export.js"></script>
+<script src="pages1.js"></script>
+<script src="pages2.js"></script>
+<script src="pages3.js"></script>
+<script src="pages4.js"></script>
+<script src="pages5.js"></script>
+<script>
+  // boot: build dataset (data.js already ran), then render
+  window.addEventListener('DOMContentLoaded', function () {
+    setTimeout(function () {
+      APP.init();
+      document.getElementById('boot').style.display = 'none';
+      document.getElementById('app').style.visibility = 'visible';
+    }, 60);
+  });
+</script>
+</body>
+</html>
